@@ -1,0 +1,52 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+h1{
+    text-align: center;
+}
+
+.container{
+    width: 90%;
+    margin: 0 auto;
+}
+
+.areaDePesquisa{
+    width: 100%;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.inputBook{
+    width: 500px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.pesquisador{
+    width: 150px;
+    height: 30px;
+    font-size: 18px;
+}
+
+.areaDeResultados{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: rgb(8, 204, 90);
+}
+
+.card{
+    width: 500px;
+    margin: 10px;
+    background-color: rgb(177, 95, 253);
+    color: #111;
+}
