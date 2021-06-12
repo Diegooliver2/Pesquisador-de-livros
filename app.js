@@ -1,20 +1,26 @@
-let tema = document.querySelector('.inputBook')
-
 async function getBooks(pesquisado) {
     const request = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${pesquisado}&maxResults=10`)
 
     return request.json()
 }
 
-let addBookInTheDOM = async (p) => {
-    document.querySelector('.areaDeResultados').innerHTML = ''
+function apresentacao(ident){
+    let livro = document.createElement('div')
+    livro.setAttribute('class', 'livro')
 
+    document.body.appendChild(livro)
+}
+
+let prepBookForDOM = async (p) => {
     const data = await getBooks(p)
+    let cont = 0
 
     let databooks = data.items.map(x => {
 
         let card = document.createElement('div')
         card.setAttribute('class', 'card')
+        card.setAttribute('id', `card${++cont}`)
+        card.setAttribute('onclick', `apresentacao('card${cont}')`)
 
         let titulo = document.createElement('div')
         titulo.setAttribute('class', 'titulo')
@@ -24,27 +30,46 @@ let addBookInTheDOM = async (p) => {
         descricao.setAttribute('class', 'descricao')
         descricao.textContent = x.volumeInfo.description != null ? x.volumeInfo.description : 'Sem descrição.'
 
-        let capa = document.createElement('div')
+        let capa = document.createElement('img')
         capa.setAttribute('class', 'capa')
-        capa.textContent = x.volumeInfo.imageLinks.thumbnail
+        capa.src = x.volumeInfo.imageLinks.thumbnail
 
         let dataPublicacao = document.createElement('div')
         dataPublicacao.setAttribute('class', 'dataPublicacao')
         dataPublicacao.textContent = x.volumeInfo.publishedDate
 
-        card.appendChild(titulo)
-        card.appendChild(descricao)
-        card.appendChild(capa)
-        card.appendChild(dataPublicacao)
+        let idBook = x.id
 
-        document.querySelector('.areaDeResultados').appendChild(card)
+        return {
+            card,
+            titulo,
+            descricao,
+            capa, 
+            dataPublicacao, 
+            idBook
+        }
+
     })
+
+    return databooks
 }
 
-let btnPesq = document.querySelector('.pesquisador')
+function addBooksInTheDOM(b){
+    for(let i = 0; i < b.length; i++){
+        b[i].card.appendChild(b[i].capa)
+        b[i].card.appendChild(b[i].titulo)
 
-btnPesq.addEventListener('click', () => {
-    addBookInTheDOM(tema.value)
+        document.querySelector('.areaDeResultados').appendChild(b[i].card)
+    }
+}
+
+let tema = document.querySelector('.inputBook')
+
+document.querySelector('.pesquisador').addEventListener('click', async () => {
+    let a = await prepBookForDOM(tema.value)
+
+    addBooksInTheDOM(a)
+    //
 })
 
 /**/
