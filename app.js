@@ -4,58 +4,54 @@ async function getBooks(pesquisado) {
     return request.json()
 }
 
-function apresentacao(ident){
-    let livro = document.createElement('div')
-    livro.setAttribute('class', 'livro')
-
-    document.body.appendChild(livro)
-}
-
 let prepBookForDOM = async (p) => {
     const data = await getBooks(p)
     let cont = 0
 
     let databooks = data.items.map(x => {
-        console.log(x)
 
         let card = document.createElement('div')
         card.setAttribute('class', 'card')
-        card.setAttribute('id', `card${++cont}`)
-        card.setAttribute('onclick', `apresentacao('card${cont}')`)
+        card.setAttribute('id', `card${cont}`)
+        card.setAttribute('onclick', `apresentacao('card${cont}', '${p}')`)
+        cont++
 
-        let descricao = document.createElement('div')
-        descricao.setAttribute('class', 'descricao')
-        descricao.textContent = x.volumeInfo.description != null ? x.volumeInfo.description : 'Sem descrição.'
-
-        let capa = document.createElement('img')
-        capa.setAttribute('class', 'capa')
-        capa.src = x.volumeInfo.imageLinks.thumbnail
-        
-        let molde = document.createElement('div')
-        molde.setAttribute('class', 'molde')
-        molde.appendChild(capa)
-
-        let titulo = document.createElement('div')
+        let titulo = document.createElement('p')
         titulo.setAttribute('class', 'titulo')
         titulo.textContent = x.volumeInfo.title
 
-        let dataPublicacao = document.createElement('div')
+        let descricao = document.createElement('div')
+        descricao.setAttribute('class', 'descricao')
+        descricao.innerHTML = x.volumeInfo.description != null ? `<strong>DESCRIÇÃO:</strong> ${x.volumeInfo.description}` : 'Sem descrição.'
+        
+        let molde = document.createElement('div')
+        molde.setAttribute('class', 'molde')
+
+        let capa = document.createElement('img')
+        capa.setAttribute('class', 'capa')
+        if(x.volumeInfo.imageLinks !== undefined){
+            capa.src = x.volumeInfo.imageLinks.thumbnail
+            molde.appendChild(capa)
+        } else {
+            molde.appendChild(titulo)
+        }
+
+        console.log(molde, capa.src, x.volumeInfo)
+
+        let dataPublicacao = document.createElement('p')
         dataPublicacao.setAttribute('class', 'dataPublicacao')
         x.volumeInfo.publishedDate = x.volumeInfo.publishedDate !== undefined ? x.volumeInfo.publishedDate.split('-',1) : 'Sem data'
-        dataPublicacao.textContent = x.volumeInfo.publishedDate
-
-        let dados = document.createElement('div')
-        dados.setAttribute('class', 'dados')
-        dados.appendChild(titulo)
-        dados.appendChild(dataPublicacao)
+        dataPublicacao.textContent = `Ano de lançamento: ${x.volumeInfo.publishedDate}`
 
         let idBook = x.id
 
         return {
             card,
+            capa,
+            titulo,
+            dataPublicacao,
             descricao,
             molde,
-            dados, 
             idBook
         }
     })
@@ -68,10 +64,53 @@ function addBooksInTheDOM(b){
 
     for(let i = 0; i < b.length; i++){
         b[i].card.appendChild(b[i].molde)
-        b[i].card.appendChild(b[i].dados)
 
         document.querySelector('.areaDeResultados').appendChild(b[i].card)
     }
+}
+
+async function apresentacao(ident, p){
+    let telaDoLivro = document.createElement('div')
+    telaDoLivro.setAttribute('class', 'telaDoLivro')
+
+    let btnFechar = document.createElement('div')
+    btnFechar.setAttribute('class', 'btnFechar')
+    btnFechar.textContent = 'x'
+
+    telaDoLivro.appendChild(btnFechar)
+    document.querySelector('.areaDeResultados').appendChild(telaDoLivro)
+
+    function removeAllData() {
+        document.querySelector('.areaDeResultados').removeChild(telaDoLivro)
+    }
+
+    btnFechar.addEventListener('click', () => {
+        removeAllData()
+    })
+    telaDoLivro.addEventListener('click', () => {
+        removeAllData()
+    })
+
+    let i = ident.substr(4)
+    console.log(i)
+
+    let dadosDoLivro = await prepBookForDOM(p)
+    let livro = document.createElement('div')
+    livro.setAttribute('class', 'livro')
+    
+    let = mld = dadosDoLivro[i].molde
+    let = ttl = dadosDoLivro[i].titulo
+    let = dscc = dadosDoLivro[i].descricao    
+    let = dataP = dadosDoLivro[i].dataPublicacao
+
+    livro.appendChild(mld)
+    livro.appendChild(ttl)
+    livro.appendChild(dscc)
+    livro.appendChild(dataP)
+
+    console.log(dadosDoLivro[i])
+
+    telaDoLivro.appendChild(livro)
 }
 
 let tema = document.querySelector('.inputBook')

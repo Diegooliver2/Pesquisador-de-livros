@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&display=swap');
 
 * {
     margin: 0;
@@ -15,8 +16,7 @@ h1{
     margin: 0 auto;
     text-align: center;
     padding: 10px;
-    margin-top: 10px;
-    border-radius: 5px;
+    border-radius: 10px;
     text-transform: uppercase;
     font-size: 25px;
     color: #fff;
@@ -25,13 +25,13 @@ h1{
 }
 
 .container {
-    width: 90%;
+    width: 980px;
     margin: 0 auto;
 }
 
 .areaDePesquisa {
     width: 60%;
-    height: 200px;
+    height: 160px;
     margin: 0 auto;
     display: flex;
     justify-content: center;
@@ -40,9 +40,10 @@ h1{
 
 .inputBook {
     width: 78%;
-    height: 30px;
-    padding: 0 1%;
-    border-radius: 5px;
+    height: 40px;
+    padding: 0 20px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
     outline: none;
     border: none; 
     font-size: 18px;
@@ -51,11 +52,13 @@ h1{
 }
 
 .pesquisador {
-    width: 140px;
-    height: 30px;
-    border-radius: 5px;
+    width: 100px;
+    height: 40px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
     border: none;
     font-size: 14px;
+    font-weight: 500;
     text-transform: uppercase;
     background-color: #f55951;
     color: #fff;
@@ -63,93 +66,109 @@ h1{
     transition: .5s; 
 }
 
-.pesquisador:hover{
+.pesquisador:hover {
     cursor: pointer;    
     background-color: #d53931;
 }
 
 .areaDeResultados {
-    width: 100%;
-    padding: 10px 0;
+    min-height: 210px;
+    padding: 10px;
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
     background-color: #ffffff;
-    margin-bottom: 5vw;
     border-radius: 10px;
     box-shadow: 1px 1px 5px #0008;
     background-color: #e1e2e6;
+    position: relative;
+}
+
+.titulo {
+    text-align: center;
 }
 
 .card {
-    width: 256px;
-    margin: 10px;
+    width: 130px;
+    margin: 5px;
     padding: 10px;
     border-radius: 5px;
     display: flex;
     align-items: center;
-    color: #111;
-    position: relative;
+    justify-content: center;
     box-shadow: 1px 1px 5px #0004;    
     background-color: #fff;
+    cursor: pointer;
 }
 
-.molde{
+.molde {
     height: 170px;
-    width: 128px;
+    width: 130px;
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
 }
 
 .capa {
     max-height: 170px;
-    max-width: 128px;
+    max-width: 130px;
     image-rendering: pixelated;
     box-shadow: 1px 1px 3px #0008;
 }
 
-.dados {
-    right:0;
-    width: 98px;
-    height: 170px;
-    padding: 0 10px;
-    border-radius: 5px;
-    margin-left: 10px;
-    bottom: 0;
-    font-size: 13px;
-    font-weight: 400;
-    color: #fff;    
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: #818dc2;
-    box-shadow: 1px 1px 3px #0004; 
-}
-
-.dataPublicacao, .titulo{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: 12px;
-}
-
-.titulo{
-    height: 85%;
-}
-
-.dataPublicacao{
-    height: 15%;
-    z-index: 10;
-}
-
-.livro{
-    background-color: #0008;
-    position: fixed;
+.telaDoLivro {
+    background-color: #000c;
+    position: absolute;
     top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
+    border-radius: 9px;
+}
+
+.btnFechar {
+    height: 30px;
+    width: 30px;
+    padding: 5px;
+    border-radius: 50%;
+    font-size: 30px;
+    font-family: 'Baloo 2';
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff9;
+    text-align: end;
+    text-shadow: 1px 1px 2px #000b;
+    user-select: none;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+}
+
+.livro {
+    width: 70%;
+    margin: 0 auto;
+    padding: 10px;
+    gap: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    box-shadow: 1px 1px 3px #0008;
+}
+
+.descricao {
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #000;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 400;
+    text-align: center;
+    background-color: #fafafa;
 }
